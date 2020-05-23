@@ -11,7 +11,7 @@
 #include <iterator>
 #include <algorithm>
 void WebS::onMessageReceived(int clientSocket, const char* msg, int length){
-	// Parse out the client's request string e.g. GET /index.html HTTP/1.1
+	//client's request string e.g. GET /index.html HTTP/1.1
 	std::istringstream iss(msg);
 	std::vector<std::string> parsed((std::istream_iterator<std::string>(iss)), std::istream_iterator<std::string>());
 
@@ -29,7 +29,8 @@ void WebS::onMessageReceived(int clientSocket, const char* msg, int length){
 		if (htmlFile == "/"){
 			htmlFile = "index.html";
 		}
-		std::ifstream f("C:\\Users\\n.poltavskiy\\source\\repos\\TiCColorServer\\TiCColorServer\\" + htmlFile);
+		//REMEMBER TO CHANGE THIS ON DEBUG/RELEASE ON A WAY WITH INDEX.HTML
+		std::ifstream f(".\\" + htmlFile);
 
 		// Check if it opened and if it did, grab the entire contents
 		if (f.good()) {
@@ -52,7 +53,7 @@ void WebS::onMessageReceived(int clientSocket, const char* msg, int length){
 				transform(content.begin(), content.end(), content.begin(), std::toupper);
 				for (int ptr = 0; ptr < base_color.size(); ptr++) {
 					if (content == base_color[ptr].get_colour_name()) {
-						content += " ";
+						content += " - ";
 						content += base_color[ptr].get_color_all();
 					}
 				}
@@ -60,35 +61,30 @@ void WebS::onMessageReceived(int clientSocket, const char* msg, int length){
 					content += " colour not in base.";
 				}
 			}
-			if (content.size() == 11) {
+			else {
+				bool found = 0;
 				replace(content.begin(), content.end(), '+', ' ');
-				string r = content.substr(0, 3);
-				string g = content.substr(4, 3);
-				string b = content.substr(8, 3);
-				for (int ptr = 0; ptr < base_color.size(); ptr++) {
-					if (stoi(r) == base_color[ptr].get_color_rgb()[0] && stoi(g) == base_color[ptr].get_color_rgb()[1] && stoi(b) == base_color[ptr].get_color_rgb()[2]) {
-						content += " - ";
-						content += base_color[ptr].get_colour_name();
-
+				if (find(content.begin(), content.end(), ' ') != content.end()) {
+					vector <int> rgb;
+					istringstream tmppostrgb(content);
+					int ptr0 = 0;
+					while (tmppostrgb >> ptr0) {
+						rgb.push_back(ptr0);
 					}
-				}
-				if (content.size() < 5) {
-					content += " colour not in base.";
-				}
-			}
-			if (content.size() == 9) {
-				string r = content.substr(0, 3);
-				string g = content.substr(3, 3);
-				string b = content.substr(6, 3);
-				for (int ptr = 0; ptr < base_color.size(); ptr++) {
-					if (stoi(r) == base_color[ptr].get_color_rgb()[0] && stoi(g) == base_color[ptr].get_color_rgb()[1] && stoi(b) == base_color[ptr].get_color_rgb()[2]) {
-						content += " - ";
-						content += base_color[ptr].get_colour_name();
-
+					for (int ptr = 0; ptr < base_color.size(); ptr++) {
+						if (rgb[0] == base_color[ptr].get_color_rgb()[0] && rgb[1] == base_color[ptr].get_color_rgb()[1] && rgb[2] == base_color[ptr].get_color_rgb()[2]) {
+							content += " - ";
+							content += base_color[ptr].get_colour_name();
+							found = 1;
+						}
 					}
+					if (!found) {
+						content += " colour not in base.";
+					}
+					
 				}
-				if (content.size() < 5) {
-					content += " colour not in base.";
+				else {
+					content += " - error RGB, please type it correctly with spaces.";
 				}
 			}
 		}

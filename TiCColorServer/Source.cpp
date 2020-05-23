@@ -2,9 +2,10 @@
 #include <iostream>
 #include <vector>
 #include "Color.h"
-//#include "base.h"
+#include "base.h"
 #include "WebS.h"
 #include <algorithm>
+#include "menu.h"
 using namespace std;
 
 
@@ -12,15 +13,22 @@ using namespace std;
 int main(int argc, char* argv[]) {
 	if (argc > 1 && argv[1][0] == '/') {
 		if (argv[1][1] == 's') {
-			WebS testserver("192.168.21.85", 8080);
-			if (testserver.init() != 0) {
+			string IP = argv[2];
+			int port = stoi(argv[3]);
+			WebS TiKKColorServer(IP.c_str(), port);
+			if (TiKKColorServer.init() != 0) {
 				return 0;
 			}
 			cout << "Server started" << endl;
-			testserver.run();
+			TiKKColorServer.run();
 			system("pause");
 		}
-		/*
+		if (argv[1][1] == '?') {
+			help_menu_view();
+		}
+		if (argv[1][1] == 'm') {
+			man_menu_view();
+		}
 		if (argv[1][1] == 'f') {
 			if (argc == 3) {
 				string tmp_colourname =  argv[2];
@@ -47,11 +55,6 @@ int main(int argc, char* argv[]) {
 				cerr << "Error RTFM!" << endl;
 				return 0;
 			}
-		}
-		*/
-		else {
-			cerr << "Error RTFM!" << endl;
-			return 0;
 		}
 	}
 	else {

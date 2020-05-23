@@ -74,12 +74,14 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <TargetName>TiKKColorServer</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <TargetName>TiKKColorServer</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -138,6 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="base.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="TcpListen.cpp" />
@@ -146,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="base.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="menu.h" />
     <ClInclude Include="TcpListen.h" />
     <ClInclude Include="WebS.h" />
   </ItemGroup>
