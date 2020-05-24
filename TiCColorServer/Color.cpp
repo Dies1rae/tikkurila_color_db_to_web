@@ -28,6 +28,9 @@ string Color::get_colour_name() {
 string  Color::get_color_all() {
 	return to_string(this->R) + " " + to_string(this->G) + " " + to_string(this->B);
 }
+string  Color::get_color_h2() {
+	return to_string(this->R) + "," + to_string(this->G) + "," + to_string(this->B);
+}
 vector <int> Color::get_color_rgb() {
 	vector <int> res;
 	res.push_back(this->R);

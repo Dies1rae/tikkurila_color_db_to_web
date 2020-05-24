@@ -30,6 +30,7 @@ public:
 	void cout_colour();
 	string get_colour_name();
 	string get_color_all();
+	string get_color_h2();
 	vector <int> get_color_rgb();
 };
 

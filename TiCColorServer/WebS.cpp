@@ -45,18 +45,23 @@ void WebS::onMessageReceived(int clientSocket, const char* msg, int length){
 		content.clear();
 		content = parsed[parsed.size() - 1];
 		content.erase(0, 6);
-		if (content.size() < 4) {
+		if (content.size() < 4 || isalpha(content[1])) {
 			content += " - this is not in color database.";
 		}
 		else {
 			if (content.size() == 4) {
 				transform(content.begin(), content.end(), content.begin(), std::toupper);
+				string tmpcont = content;
+				string tmph2rgb;
+				content.clear();
 				for (int ptr = 0; ptr < base_color.size(); ptr++) {
-					if (content == base_color[ptr].get_colour_name()) {
-						content += " - ";
-						content += base_color[ptr].get_color_all();
+					if (tmpcont == base_color[ptr].get_colour_name()) {
+						tmpcont += " - ";
+						tmpcont += base_color[ptr].get_color_all();
+						tmph2rgb += base_color[ptr].get_color_h2();
 					}
 				}
+				content += "<!DOCTYPE html><html><head><style>h3 {background-color:  rgb("+tmph2rgb+");}</style></head><body><h1>TIKKURILA COLOR</h1><h2>"+tmpcont+"</h2><h3>EXAMPLE OF COLOR</h3></body></html>";
 				if (content.size() < 5) {
 					content += " colour not in base.";
 				}
@@ -71,17 +76,21 @@ void WebS::onMessageReceived(int clientSocket, const char* msg, int length){
 					while (tmppostrgb >> ptr0) {
 						rgb.push_back(ptr0);
 					}
+					string tmpcont = content;
+					string tmph2rgb;
+					content.clear();
 					for (int ptr = 0; ptr < base_color.size(); ptr++) {
 						if (rgb[0] == base_color[ptr].get_color_rgb()[0] && rgb[1] == base_color[ptr].get_color_rgb()[1] && rgb[2] == base_color[ptr].get_color_rgb()[2]) {
-							content += " - ";
-							content += base_color[ptr].get_colour_name();
+							tmpcont += " - ";
+							tmpcont += base_color[ptr].get_colour_name();
 							found = 1;
+							tmph2rgb += base_color[ptr].get_color_h2();
 						}
 					}
 					if (!found) {
 						content += " colour not in base.";
 					}
-					
+					content += "<!DOCTYPE html><html><head><style>h3 {background-color:  rgb(" + tmph2rgb + ");}</style></head><body><h1>TIKKURILA COLOR</h1><h2>" + tmpcont + "</h2><h3>EXAMPLE OF COLOR</h3></body></html>";
 				}
 				else {
 					content += " - error RGB, please type it correctly with spaces.";
