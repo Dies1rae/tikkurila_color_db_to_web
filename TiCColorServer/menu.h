@@ -33,9 +33,9 @@ void man_menu_view() {
 	cout << endl << "***|" << "DESCRIPTION:";
 	SetConsoleTextAttribute(hConsole, 7);
 	cout << endl << "***|" << "		./TiKKColorServer /s(server start) ... IPADDRESS FOR SRV ... PORT";
-	cout << endl << "***|" << "		./dipscan /f(find) ... RGB color like(111 111 111) or name in TIKKURILA catalog(g300 ... G300)";
-	cout << endl << "***|" << "		./dipscan /?(help menu)";
-	cout << endl << "***|" << "		./dipscan /man(man menu)";
+	cout << endl << "***|" << "		./TiKKColorServer /f(find) ... RGB color like(111 111 111) or name in TIKKURILA catalog(g300 ... G300)";
+	cout << endl << "***|" << "		./TiKKColorServer /?(help menu)";
+	cout << endl << "***|" << "		./TiKKColorServer /man(man menu)";
 	SetConsoleTextAttribute(hConsole, BACKGROUND_RED | BACKGROUND_BLUE | BACKGROUND_GREEN | 9);
 	cout << endl << "...by Dies_Irae" << endl;
 	cout << endl;
